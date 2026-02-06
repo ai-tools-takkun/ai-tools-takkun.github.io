@@ -1,0 +1,23 @@
+<select id="tool">
+  <option value="translator">翻訳</option>
+  <option value="summarizer">要約</option>
+  <option value="proofreader">校正</option>
+</select>
+
+<textarea id="input"></textarea>
+<button onclick="run()">実行</button>
+<pre id="output"></pre>
+
+<script>
+async function run() {
+  const res = await fetch("https://ai-tools.takkunmcjp.workers.dev", {
+    method: "POST",
+    body: JSON.stringify({
+      tool: tool.value,
+      prompt: input.value
+    })
+  });
+  const data = await res.json();
+  output.textContent = data.choices[0].message.content;
+}
+</script>
