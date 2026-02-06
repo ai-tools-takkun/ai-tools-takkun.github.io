@@ -19,12 +19,24 @@ send.onclick = async ()=>{
   add(text,"user");
   history.push({role:"user",content:text});
 
-  const r = await fetch(API,{
-    method:"POST",
-    body:JSON.stringify({message:text,history})
-  });
-  const d = await r.json();
-  const reply = d.choices[0].message.content;
-  add(reply,"ai");
-  history.push({role:"assistant",content:reply});
+  try{
+    const r = await fetch(API,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({message:text,history})
+    });
+    const d = await r.json();
+
+    if(!d.choices){
+      add("API Error:\n"+JSON.stringify(d,null,2),"ai");
+      return;
+    }
+
+    const reply = d.choices[0].message.content;
+    add(reply,"ai");
+    history.push({role:"assistant",content:reply});
+
+  }catch(e){
+    add("Network error: "+e.message,"ai");
+  }
 };
