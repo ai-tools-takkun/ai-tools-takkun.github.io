@@ -1,4 +1,4 @@
-const API = "https://YOUR-WORKER.workers.dev";
+const API = "https://ai-tools.takkunmcjp.workers.dev";
 const log = document.getElementById("log");
 const msg = document.getElementById("msg");
 const send = document.getElementById("send");
