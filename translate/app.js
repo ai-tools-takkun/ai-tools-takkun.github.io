@@ -3,10 +3,10 @@ async function run(){
   const r = await fetch(API,{
     method:"POST",
     body:JSON.stringify({
-      message:"Translate to Japanese:\n"+in.value,
+      message:"Translate to Japanese:\n"+document.getElementById("in").value,
       history:[]
     })
   });
   const d=await r.json();
-  out.textContent=d.choices[0].message.content;
+  document.getElementById("out").textContent=d.choices[0].message.content;
 }
